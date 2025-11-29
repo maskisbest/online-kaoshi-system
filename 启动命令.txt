@@ -1,0 +1,15 @@
+前端启动
+进入到前端目录 
+# 安装yarn
+npm install yarn -g
+
+# 查看是否安装成功
+yarn -v
+
+# 安装依赖
+yarn install 
+
+# 启动项目
+yarn dev  
+ 
+node 用12 或者 16  千万不要用高版本18不行有兼容性问题
