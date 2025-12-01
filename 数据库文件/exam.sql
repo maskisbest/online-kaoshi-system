@@ -160,6 +160,27 @@ INSERT INTO `judge_question` VALUES (10011, '计算机网络', '利用BT下载�
 INSERT INTO `judge_question` VALUES (10012, '计算机网络', 'INTERNET上向朋友发送电子邮件,必须知道对方的真实姓名和家庭住址', 'F', NULL, 2, '1', NULL);
 
 -- ----------------------------
+-- Table structure for subject_question
+-- ----------------------------
+DROP TABLE IF EXISTS `subject_question`;
+CREATE TABLE `subject_question`  (
+  `questionId` int NOT NULL AUTO_INCREMENT COMMENT '试题编号',
+  `subject` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '考试科目',
+  `question` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '问题题目',
+  `answer` text CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL COMMENT '参考答案',
+  `analysis` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '题目解析',
+  `level` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '难度等级',
+  `section` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NULL DEFAULT NULL COMMENT '所属章节',
+  `score` int NULL DEFAULT 5 COMMENT '分数',
+  PRIMARY KEY (`questionId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_bin COMMENT = '主观题题库表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of subject_question
+-- ----------------------------
+INSERT INTO `subject_question` VALUES (10001, '计算机网络', '请简述 TCP 三次握手的主要流程', '客户端发送SYN，服务端返回SYN+ACK，客户端再次ACK确认连接', '抓住关键报文与状态转换即可得分', '2', '传输层', 10);
+
+-- ----------------------------
 -- Table structure for message
 -- ----------------------------
 DROP TABLE IF EXISTS `message`;

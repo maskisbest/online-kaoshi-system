@@ -51,7 +51,147 @@ a:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(18px);
+}
+
+.app-layout {
+  min-height: 100vh;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.app-body {
+  display: flex;
+  gap: 24px;
+}
+
+.app-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.app-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  padding: 24px;
+  color: var(--text-main);
+}
+
+.app-panel h1,
+.app-panel h2,
+.app-panel h3,
+.app-panel h4,
+.app-panel h5,
+.app-panel h6,
+.app-panel p,
+.app-panel span,
+.app-panel label,
+.app-panel li,
+.app-panel strong,
+.app-panel .el-breadcrumb__inner,
+.app-panel .el-form-item__label {
+  color: var(--text-main);
+}
+
+.app-panel .el-input__inner,
+.app-panel .el-textarea__inner,
+.app-panel .el-select .el-input__inner {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  border-radius: 10px;
+}
+
+.app-panel .el-input__inner::placeholder,
+.app-panel .el-textarea__inner::placeholder {
+  color: var(--text-muted);
+}
+
+.app-panel .el-input__inner:focus,
+.app-panel .el-textarea__inner:focus,
+.app-panel .el-select .el-input.is-focus .el-input__inner {
+  border-color: rgba(14, 165, 233, 0.8);
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.app-panel .el-table,
+.app-panel .el-table th,
+.app-panel .el-table td {
+  background: transparent;
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.app-panel .el-table::before {
+  background-color: transparent;
+}
+
+.app-panel .el-pagination button,
+.app-panel .el-pagination .el-pager li {
+  background: transparent;
+  color: var(--text-main);
+  border: none;
+}
+
+.app-panel .el-pagination .el-pager li.active {
+  color: var(--accent);
+}
+
+.app-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.app-subtitle {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.app-content-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.15);
+  color: var(--brand);
+  font-size: 12px;
+}
+
+@media (max-width: 1280px) {
+  .app-layout {
+    padding: 16px;
+  }
+
+  .app-body {
+    flex-direction: column;
+  }
+
+  .app-sidebar {
+    width: 100%;
+  }
 }
 
 .text-muted {

@@ -15,4 +15,6 @@ public class Item {
     private Integer fillNumber;//填空题
 
     private Integer judgeNumber;//判断题
+
+    private Integer subjectNumber;//主观题
 }

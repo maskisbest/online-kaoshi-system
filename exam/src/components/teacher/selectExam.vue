@@ -4,26 +4,87 @@
     <div class="wrapper">
       <ul class="top">
         <li class="order">试卷列表</li>
-        <li class="search-li"><div class="icon"><input type="text" placeholder="试卷名称" class="search" v-model="key"><i class="el-icon-search"></i></div></li>
-        <li><el-button type="primary" @click="search()">搜索试卷</el-button></li>
+        <li class="search-li">
+          <div class="icon">
+            <input
+              type="text"
+              placeholder="试卷名称"
+              class="search"
+              v-model="key"
+            /><i class="el-icon-search"></i>
+          </div>
+        </li>
+        <li>
+          <el-button type="primary" @click="search()">搜索试卷</el-button>
+        </li>
       </ul>
     </div>
 
     <el-table :data="pagination.records" border>
-      <el-table-column fixed="left" prop="source" label="试卷名称" width="180"></el-table-column>
-      <el-table-column prop="description" label="介绍" width="200"></el-table-column>
-      <el-table-column prop="institute" label="所属学院" width="120"></el-table-column>
-      <el-table-column prop="major" label="所属专业" width="200"></el-table-column>
+      <el-table-column
+        fixed="left"
+        prop="source"
+        label="试卷名称"
+        width="180"
+      ></el-table-column>
+      <el-table-column
+        prop="description"
+        label="介绍"
+        width="200"
+      ></el-table-column>
+      <el-table-column
+        prop="institute"
+        label="所属学院"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="major"
+        label="所属专业"
+        width="200"
+      ></el-table-column>
       <el-table-column prop="grade" label="年级" width="100"></el-table-column>
-      <el-table-column prop="examDate" label="考试日期" width="120"></el-table-column>
-      <el-table-column prop="totalTime" label="持续时间" width="120"></el-table-column>
-      <el-table-column prop="totalScore" label="总分" width="120"></el-table-column>
-      <el-table-column prop="type" label="试卷类型" width="120"></el-table-column>
-      <el-table-column prop="tips" label="考生提示" width="400"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column
+        prop="examDate"
+        label="考试日期"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="totalTime"
+        label="持续时间"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="totalScore"
+        label="总分"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="type"
+        label="试卷类型"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="tips"
+        label="考生提示"
+        width="400"
+      ></el-table-column>
+      <el-table-column fixed="right" label="操作" width="230">
         <template slot-scope="scope">
-          <el-button @click="edit(scope.row.examCode)" type="primary" size="small">编辑</el-button>
-          <el-button @click="deleteRecord(scope.row.examCode)" type="danger" size="small">删除</el-button>
+          <el-button
+            @click="edit(scope.row.examCode)"
+            type="primary"
+            size="small"
+            >编辑</el-button
+          >
+          <el-button @click="publish(scope.row)" type="success" size="small"
+            >发布</el-button
+          >
+          <el-button
+            @click="deleteRecord(scope.row.examCode)"
+            type="danger"
+            size="small"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -34,14 +95,17 @@
       :page-sizes="[4, 8, 10, 20]"
       :page-size="pagination.size"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.total" class="page">
+      :total="pagination.total"
+      class="page"
+    >
     </el-pagination>
     <!-- 编辑对话框-->
     <el-dialog
       title="编辑试卷信息"
       :visible.sync="dialogVisible"
       width="30%"
-      :before-close="handleClose">
+      :before-close="handleClose"
+    >
       <section class="update">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="试卷名称">
@@ -61,7 +125,12 @@
           </el-form-item>
           <el-form-item label="考试日期">
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.examDate" style="width: 100%;"></el-date-picker>
+              <el-date-picker
+                type="date"
+                placeholder="选择日期"
+                v-model="form.examDate"
+                style="width: 100%"
+              ></el-date-picker>
             </el-col>
           </el-form-item>
           <el-form-item label="持续时间">
@@ -86,98 +155,133 @@
   </div>
 </template>
 
-<script >
+<script>
 export default {
   data() {
     return {
       form: {}, //保存点击以后当前试卷的信息
-      pagination: { //分页后的考试信息
+      pagination: {
+        //分页后的考试信息
         current: 1, //当前页
         total: null, //记录条数
-        size: 4 //每页条数
+        size: 4, //每页条数
       },
-      dialogVisible: false
-    }
+      dialogVisible: false,
+    };
   },
   created() {
-    this.getExamInfo()
+    this.getExamInfo();
   },
   methods: {
     //搜索试卷
     search() {
-      this.$axios('/api/exams').then(res => {
-        if(res.data.code == 200) {
-          let allExam = res.data.data
-          let newPage = allExam.filter(item => {
-            return item.source.includes(this.key)
-          })
-          this.pagination.records = newPage
+      this.$axios("/api/exams").then((res) => {
+        if (res.data.code == 200) {
+          let allExam = res.data.data;
+          let newPage = allExam.filter((item) => {
+            return item.source.includes(this.key);
+          });
+          this.pagination.records = newPage;
         }
-      })
+      });
     },
-    edit(examCode) { //编辑试卷
-      this.dialogVisible = true
-      this.$axios(`/api/exam/${examCode}`).then(res => { //根据试卷id请求后台
-        if(res.data.code == 200) {
-          this.form = res.data.data
+    edit(examCode) {
+      //编辑试卷
+      this.dialogVisible = true;
+      this.$axios(`/api/exam/${examCode}`).then((res) => {
+        //根据试卷id请求后台
+        if (res.data.code == 200) {
+          this.form = res.data.data;
         }
-      })
+      });
     },
-    handleClose(done) { //关闭提醒
-      this.$confirm('确认关闭？')
-        .then(_ => {
+    handleClose(done) {
+      //关闭提醒
+      this.$confirm("确认关闭？")
+        .then((_) => {
           done();
-        }).catch(_ => {});
+        })
+        .catch((_) => {});
     },
-    submit() { //提交修改后的试卷信息
-      this.dialogVisible = false
+    submit() {
+      //提交修改后的试卷信息
+      this.dialogVisible = false;
       this.$axios({
-        url: '/api/exam',
-        method: 'put',
+        url: "/api/exam",
+        method: "put",
         data: {
-          ...this.form
+          ...this.form,
+        },
+      }).then((res) => {
+        if (res.data.code == 200) {
+          this.$message({
+            //成功修改提示
+            message: "更新成功",
+            type: "success",
+          });
         }
-      }).then(res => {
-        if(res.data.code == 200) {
-          this.$message({ //成功修改提示
-            message: '更新成功',
-            type: 'success'
-          })
-        }
-        this.getExamInfo()
-      })
+        this.getExamInfo();
+      });
     },
     deleteRecord(examCode) {
-      this.$confirm("确定删除该记录吗,该操作不可逆！！！","删除提示",{
-        confirmButtonText: '确定删除',
-        cancelButtonText: '算了,留着',
-        type: 'danger'
-      }).then(()=> { //确认删除
-        this.$axios({
-          url: `/api/exam/${examCode}`,
-          method: 'delete',
-        }).then(res => {
-          this.getExamInfo()
+      this.$confirm("确定删除该记录吗,该操作不可逆！！！", "删除提示", {
+        confirmButtonText: "确定删除",
+        cancelButtonText: "算了,留着",
+        type: "danger",
+      })
+        .then(() => {
+          //确认删除
+          this.$axios({
+            url: `/api/exam/${examCode}`,
+            method: "delete",
+          }).then((res) => {
+            this.getExamInfo();
+          });
         })
-      }).catch(() => {
-
-      })
+        .catch(() => {});
     },
-    getExamInfo() { //分页查询所有试卷信息
-      this.$axios(`/api/exams/${this.pagination.current}/${this.pagination.size}`).then(res => {
-        this.pagination = res.data.data
-      }).catch(error => {
-      })
+    publish(row) {
+      const today = new Date();
+      const y = today.getFullYear();
+      const m = String(today.getMonth() + 1).padStart(2, "0");
+      const d = String(today.getDate()).padStart(2, "0");
+      const examDate = `${y}-${m}-${d}`;
+      const payload = {
+        ...row,
+        examDate,
+      };
+      this.$axios({
+        url: "/api/exam",
+        method: "put",
+        data: payload,
+      }).then((res) => {
+        if (res.data.code === 200) {
+          this.$message.success("已发布到学生端（考试日期已更新为今天）");
+          this.getExamInfo();
+        } else {
+          this.$message.error(res.data.message || "发布失败");
+        }
+      });
+    },
+    getExamInfo() {
+      //分页查询所有试卷信息
+      this.$axios(
+        `/api/exams/${this.pagination.current}/${this.pagination.size}`
+      )
+        .then((res) => {
+          this.pagination = res.data.data;
+        })
+        .catch((error) => {});
     },
     //改变当前记录条数
     handleSizeChange(val) {
-      this.pagination.size = val
-      this.getExamInfo()
+      this.pagination.size = val;
+      this.getExamInfo();
     },
     //改变当前页码，重新发送请求
     handleCurrentChange(val) {
-      this.pagination.current = val
-      this.getExamInfo()
+      this.pagination.current = val;
+      this.getExamInfo();
     },
   },
 };
@@ -191,117 +295,109 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  .edit{
+  .edit {
     margin-left: 20px;
   }
 }
 </style>
 <style lang="less" scoped>
-.pagination {
-  padding: 20px 0px 30px 0px;
-  .el-pagination {
-    display: flex;
-    justify-content: center;
-  }
+.exam {
+  color: var(--text-main);
 }
-.paper {
-  h4 {
-    cursor: pointer;
-  }
+
+.wrapper {
+  background: transparent;
 }
-.paper .item a {
-  color: #000;
+
+.top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel-strong);
 }
-.wrapper .top .order {
+
+.top .order {
+  font-weight: 600;
   cursor: pointer;
 }
-.wrapper .top .order:hover {
-  color: #0195ff;
-  border-bottom: 2px solid #0195ff;
+
+.top .search-li {
+  margin-left: auto;
+  flex: 1;
+  min-width: 220px;
 }
-.wrapper .top .order:visited {
-  color: #0195ff;
-  border-bottom: 2px solid #0195ff;
-}
-.item .info i {
-  margin-right: 5px;
-  color: #0195ff;
-}
-.item .info span {
-  margin-right: 14px;
-}
-.paper .item {
-  width: 380px;
-  border-radius: 4px;
-  padding: 20px 30px;
-  border: 1px solid #eee;
-  box-shadow: 0 0 4px 2px rgba(217,222,234,0.3);
-  transition: all 0.6s ease;
-}
-.paper .item:hover {
-  box-shadow: 0 0 4px 2px rgba(140, 193, 248, 0.45);
-  transform: scale(1.03);
-}
-.paper .item .info {
-  font-size: 14px;
-  color: #88949b;
-}
-.paper .item .name {
-  font-size: 14px;
-  color: #88949b;
-}
-.paper * {
-  margin: 20px 0;
-}
-.wrapper .paper {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.top .el-icon-search {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
+
 .top .icon {
   position: relative;
 }
-.wrapper .top {
-  border-bottom: 1px solid #eee;
-  margin-bottom: 20px;
+
+.top .search {
+  width: 100%;
+  padding: 10px 36px 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  transition: var(--transition);
 }
-.search-li {
-  margin-left: auto;
-  padding-left: 740px;
+
+.top .search::placeholder {
+  color: var(--text-muted);
 }
-.top .search-li {
-  margin-left: auto;
+
+.top .search:focus,
+.top .search:hover {
+  border-color: rgba(14, 165, 233, 0.7);
+  outline: none;
 }
+
+.top .el-icon-search {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
 .top li {
   display: flex;
   align-items: center;
 }
-.top .search {
-  margin-left: auto;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #eee;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+
+.top ::v-deep .el-button--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #0b1221;
 }
-.top .search:hover {
-  color: #0195ff;
-  border-color: #0195ff;
+
+.top ::v-deep .el-button--primary:hover {
+  background: var(--brand-strong);
+  border-color: var(--brand-strong);
 }
-.wrapper .top {
+
+.pagination {
+  padding: 28px 0 10px;
+}
+
+.pagination ::v-deep .el-pagination {
   display: flex;
-}
-.wrapper .top li {
-  margin: 20px;
+  justify-content: center;
 }
 
+@media (max-width: 768px) {
+  .top {
+    padding: 16px;
+  }
 
- .wrapper {
-  background-color: #fff;
+  .top .search-li {
+    flex-basis: 100%;
+    order: 3;
+  }
 }
 </style>

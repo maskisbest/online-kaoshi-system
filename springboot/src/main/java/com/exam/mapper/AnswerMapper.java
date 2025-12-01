@@ -9,8 +9,9 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface AnswerMapper {
-    @Select("select question, subject, score, section,level, \"选择题\" as type from multi_question " +
-            "union select  question, subject, score, section,level, \"判断题\" as type  from judge_question " +
-            "union select  question, subject, score, section,level, \"填空题\" as type from fill_question")
+    @Select("select question, subject, score, section, level, '选择题' as type from multi_question " +
+            "union all select question, subject, score, section, level, '判断题' as type from judge_question " +
+            "union all select question, subject, score, section, level, '填空题' as type from fill_question " +
+            "union all select question, subject, score, section, level, '主观题' as type from subject_question")
     IPage<AnswerVO> findAll(Page page);
 }

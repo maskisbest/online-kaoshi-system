@@ -1,14 +1,16 @@
 // 展示组件页面
 <template>
-  <div id="index">
-    <header1 class="topbar"></header1>
-    <section class="container">
-      <div class="left_side">
-        <mainLeft></mainLeft>
+  <div id="index" class="app-layout">
+    <header1 class="app-panel topbar"></header1>
+    <section class="app-body">
+      <div :class="['app-sidebar', { collapsed: isCollapsed }]">
+        <mainLeft class="app-panel sidebar-panel"></mainLeft>
       </div>
-      <div class="main_wrapper">
-        <navigator class="nav"></navigator>
-        <router-view></router-view>
+      <div class="app-main">
+        <navigator class="app-panel nav-panel"></navigator>
+        <div class="app-panel app-content-card">
+          <router-view></router-view>
+        </div>
       </div>
     </section>
   </div>
@@ -18,6 +20,7 @@
 import header from '@/components/common/header'
 import mainLeft from '@/components/common/mainLeft'
 import navigator from '@/components/common/navigator'
+import { mapState } from 'vuex'
 export default {
   components:{
     header1: header,
@@ -29,6 +32,11 @@ export default {
       username: '布咕咕'
     }
   },
+  computed: {
+    ...mapState({
+      isCollapsed: state => state.flag
+    })
+  },
   methods: {
 
   }
@@ -36,18 +44,35 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#index .nav {
-  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+.topbar {
+  padding: 0;
 }
-.container {
-  display: flex;
-  background-color: #fff;
+
+.nav-panel {
+  padding: 8px 24px;
 }
-.main_wrapper {
+
+.app-content-card {
+  min-height: 70vh;
   overflow: hidden;
-  flex: 1;
-  background-color: #fff;
+}
+
+.sidebar-panel {
+  padding: 0;
+}
+
+.app-sidebar {
+  transition: width 0.2s ease;
+}
+
+.app-sidebar.collapsed {
+  width: 96px;
+}
+
+@media (max-width: 1280px) {
+  .sidebar-panel {
+    max-height: 420px;
+    overflow: hidden;
+  }
 }
 </style>
-

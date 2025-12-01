@@ -4,15 +4,16 @@ import com.exam.entity.*;
 import com.exam.service.serviceimpl.FillQuestionServiceImpl;
 import com.exam.service.serviceimpl.JudgeQuestionServiceImpl;
 import com.exam.service.serviceimpl.MultiQuestionServiceImpl;
+import com.exam.service.serviceimpl.SubjectQuestionServiceImpl;
 import com.exam.service.serviceimpl.PaperServiceImpl;
 import com.exam.Result.ApiResult;
 import com.exam.Result.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 /**
  * 试卷控制器
@@ -31,6 +32,9 @@ public class PaperController {
 
     @Autowired
     private FillQuestionServiceImpl fillQuestionService;
+
+    @Autowired
+    private SubjectQuestionServiceImpl subjectQuestionService;
     @GetMapping("/papers")
     public ApiResult<PaperManage> findAll() {
        ApiResult res =  ApiResultHandler.buildApiResult(200,"请求成功",paperService.findAll());
@@ -47,11 +51,13 @@ public class PaperController {
         List<MultiQuestion> multiQuestionRes = multiQuestionService.findByIdAndType(paperId);   //选择题题库 1
         List<FillQuestion> fillQuestionsRes = fillQuestionService.findByIdAndType(paperId);     //填空题题库 2
         List<JudgeQuestion> judgeQuestionRes = judgeQuestionService.findByIdAndType(paperId);   //判断题题库 3
-        //Map封装
-        Map<Integer, List<?>> map = new HashMap<>();
+        List<SubjectQuestion> subjectQuestionRes = subjectQuestionService.findByIdAndType(paperId); // 主观题 4
+        //Map封装，使用有序Map保证前端展示顺序
+        Map<Integer, List<?>> map = new LinkedHashMap<>();
         map.put(1,multiQuestionRes);
         map.put(2,fillQuestionsRes);
         map.put(3,judgeQuestionRes);
+        map.put(4,subjectQuestionRes);
         return  map;
     }
 

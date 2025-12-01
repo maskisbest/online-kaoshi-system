@@ -24,6 +24,8 @@
     border-radius: 4px;
     border-left: 5px solid rgb(80, 191, 255);
     margin: 20px 0px;
+    color: #334155;
+    line-height: 1.6;
   }
 }
 </style>

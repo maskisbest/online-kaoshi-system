@@ -98,6 +98,17 @@ ALTER TABLE `score`
 ALTER TABLE `multi_question`  CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `fill_question`   CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE `judge_question`  CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `subject_question` (
+    `questionId` INT NOT NULL AUTO_INCREMENT COMMENT '试题编号',
+    `subject`    VARCHAR(60) NULL DEFAULT NULL COMMENT '考试科目',
+    `question`   VARCHAR(255) NULL DEFAULT NULL COMMENT '问题题目',
+    `answer`     TEXT NULL COMMENT '参考答案',
+    `analysis`   VARCHAR(255) NULL DEFAULT NULL COMMENT '题目解析',
+    `level`      VARCHAR(1) NULL DEFAULT NULL COMMENT '难度等级',
+    `section`    VARCHAR(60) NULL DEFAULT NULL COMMENT '所属章节',
+    `score`      INT NULL DEFAULT 5 COMMENT '分数',
+    PRIMARY KEY (`questionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='主观题题库表';
 
 -- 消息、反馈
 ALTER TABLE `message` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

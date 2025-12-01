@@ -1,6 +1,6 @@
 <!--页脚部分-->
 <template>
-  <footer id="footer">
+  <footer id="footer" class="glass-panel footer-card">
     <ul>
       <li><a href="javascript:;">关于我们</a></li>
       <li><a href="javascript:;">免责声明</a></li>
@@ -18,24 +18,29 @@ export default {
 </script>
 
 <style scoped>
-#footer a {
-  color: #919698;
-  font-size: 14px;
-}
 #footer {
-  background-color: #eee;
+  margin-top: 24px;
+  padding: 24px;
+  text-align: center;
 }
+
 #footer ul {
-  margin-top: 40px;
-  border-top: 1px solid #d5d5d5;
+  margin: 0;
+  padding: 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  height: 80px;
-  line-height: 80px;
+  gap: 16px;
 }
-#footer ul li {
-  color: #919698;
-  font-size: 14px;
-  margin-right: 20px;
+
+#footer ul li,
+#footer a {
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+#footer a:hover {
+  color: var(--accent);
 }
 </style>

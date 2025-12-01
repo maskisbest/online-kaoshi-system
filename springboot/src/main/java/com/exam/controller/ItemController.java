@@ -5,6 +5,7 @@ import com.exam.entity.PaperManage;
 import com.exam.service.serviceimpl.FillQuestionServiceImpl;
 import com.exam.service.serviceimpl.JudgeQuestionServiceImpl;
 import com.exam.service.serviceimpl.MultiQuestionServiceImpl;
+import com.exam.service.serviceimpl.SubjectQuestionServiceImpl;
 import com.exam.Result.ApiResultHandler;
 import com.exam.service.serviceimpl.PaperServiceImpl;
 import com.exam.vo.Item;
@@ -32,6 +33,9 @@ public class ItemController {
     JudgeQuestionServiceImpl judgeQuestionService;
 
     @Autowired
+    SubjectQuestionServiceImpl subjectQuestionService;
+
+    @Autowired
     PaperServiceImpl paperService;
 
 
@@ -43,6 +47,8 @@ public class ItemController {
         Integer fillNumber = item.getFillNumber();
         // 判断题
         Integer judgeNumber = item.getJudgeNumber();
+        // 主观题
+        Integer subjectNumber = item.getSubjectNumber();
         //出卷id
         Integer paperId = item.getPaperId();
 
@@ -77,6 +83,21 @@ public class ItemController {
             int index = paperService.add(paperManage);
             if (index == 0)
                 return ApiResultHandler.buildApiResult(400, "判断题题组卷保存失败", null);
+        }
+
+        // 主观题
+        if (subjectNumber != null && subjectNumber > 0) {
+            List<Integer> subjectIds = subjectQuestionService.findBySubject(item.getSubject(), subjectNumber);
+            if (subjectIds == null) {
+                return ApiResultHandler.buildApiResult(400, "主观题数据库获取失败", null);
+            }
+            for (Integer subId : subjectIds) {
+                PaperManage paperManage = new PaperManage(paperId, 4, subId);
+                int index = paperService.add(paperManage);
+                if (index == 0) {
+                    return ApiResultHandler.buildApiResult(400, "主观题组卷保存失败", null);
+                }
+            }
         }
 
 

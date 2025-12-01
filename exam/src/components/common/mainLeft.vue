@@ -1,15 +1,15 @@
 <!--左边下拉导航栏-->
 <template>
-  <div id="left">
+  <div id="left" class="sidebar-shell">
     <el-menu
-      active-text-color="#dd5862"
-      text-color="#000"
+      active-text-color="#f97316"
+      text-color="#e2e8f0"
       :default-active="this.$route.path"
-      class="el-menu-vertical-demo"
+      class="el-menu-vertical-demo modern-menu"
       @open="handleOpen"
       @close="handleClose"
       :collapse="flag"
-      background-color="#124280"
+      background-color="transparent"
       menu-trigger="click" router>
       <el-submenu v-for="(item,index) in menu" :index='item.index' :key="index">
         <template slot="title">
@@ -33,9 +33,7 @@ import {mapState} from 'vuex'
 export default {
   name: "mainLeft",
   data() {
-    return {
-
-    }
+    return {}
   },
   computed: mapState(["flag","menu"]),
   created() {
@@ -68,40 +66,65 @@ export default {
 </script>
 
 <style>
+.sidebar-shell {
+  height: 100%;
+}
+
+.modern-menu {
+  background-color: transparent !important;
+  border-right: none;
+  width: 100%;
+}
+
 .el-menu-vertical-demo .el-submenu__title {
   overflow: hidden;
+  color: var(--text-main);
+  font-weight: 600;
 }
+
+.left-width {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .left-width .iconfont {
   font-size: 18px;
-  color: #fff;
+  color: var(--accent);
 }
-.left-width {
-  width: 213px;
-}
+
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  min-height: 900px;
+  min-height: calc(100vh - 160px);
 }
-#left {
-  height: 900px;
-  background-color: #124280;
-  z-index: 0;
-}
+
 #left .el-menu-vertical-demo .title {
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  margin-left: 14px;
+  color: var(--text-main);
+  font-size: 15px;
+  font-weight: 600;
 }
-.el-submenu {
-  border-bottom: 1px solid #eeeeee0f !important;
-}
+
 .el-submenu__title:hover {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.04) !important;
 }
-.el-submenu__title i {
-    color: #fbfbfc !important;
+
+.el-menu-item {
+  border-radius: 10px !important;
+  margin: 4px 12px;
+  color: var(--text-muted) !important;
 }
-.LiColor{
-  color: #ffffff!important;
+
+.el-menu-item.is-active {
+  background: rgba(249, 115, 22, 0.15) !important;
+  color: #fff !important;
+}
+
+.LiColor {
+  color: var(--text-muted) !important;
+}
+
+.el-submenu {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+  margin-bottom: 4px;
 }
 </style>
