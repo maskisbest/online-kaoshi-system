@@ -5,10 +5,9 @@ import com.exam.entity.Student;
 import com.exam.entity.Teacher;
 import com.exam.mapper.LoginMapper;
 import com.exam.service.LoginService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -18,16 +17,21 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Admin adminLogin(Integer username, String password) {
-        return loginMapper.adminLogin(username,password);
+        return loginMapper.adminLogin(username, password);
     }
 
     @Override
     public Teacher teacherLogin(Integer username, String password) {
-        return loginMapper.teacherLogin(username,password);
+        return loginMapper.teacherLogin(username, password);
     }
 
     @Override
     public Student studentLogin(Integer username, String password) {
-        return loginMapper.studentLogin(username,password);
+        return loginMapper.studentLogin(username, password);
+    }
+
+    @Override
+    public int countUserByContact(String cardId, String tel, String email) {
+        return loginMapper.countUserByContact(cardId, tel, email);
     }
 }

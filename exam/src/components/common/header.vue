@@ -35,7 +35,7 @@ export default {
       user: { //用户信息
         userName: null,
         userId: null
-      } 
+      }
     }
   },
   created() {
@@ -60,13 +60,15 @@ export default {
     },
     exit() {
       let role = this.$cookies.get("role")
-      this.$router.push({path:"/"}) //跳转到登录页面
-      this.$cookies.remove("cname") //清除cookie
-      this.$cookies.remove("cid")
-      this.$cookies.remove("role")
-      if(role == 0) {
-        this.menu.pop()
-      }
+      this.$axios({ url: '/auth/logout', method: 'post' }).finally(() => {
+        this.$router.push({path:"/"}) //跳转到登录页面
+        this.$cookies.remove("cname") //清除cookie
+        this.$cookies.remove("cid")
+        this.$cookies.remove("role")
+        if(role == 0) {
+          this.menu.pop()
+        }
+      })
     }
   },
 }

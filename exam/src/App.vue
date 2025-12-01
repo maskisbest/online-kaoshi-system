@@ -1,15 +1,12 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-
-  name: 'App',
-
-
+  name: 'App'
 }
 </script>
 
@@ -17,15 +14,11 @@ export default {
 ul {
   list-style: none;
 }
-a {
-  text-decoration: none;
-}
-* {
-  margin: 0;
-  padding: 0;
-}
+
 #app {
-  font-family: "Microsoft YaHei", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  background-color: #eee;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-main);
 }
 </style>

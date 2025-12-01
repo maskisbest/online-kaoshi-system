@@ -3,10 +3,9 @@ package com.exam.service.serviceimpl;
 import com.exam.entity.Admin;
 import com.exam.mapper.AdminMapper;
 import com.exam.service.AdminService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -36,6 +35,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int add(Admin admin) {
-        return 0;
+        return adminMapper.add(admin);
     }
 }

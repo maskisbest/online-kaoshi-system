@@ -8,8 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.exam.service.*.mapper*")
+@MapperScan("com.exam.mapper")
 public class MybatisPlusConfig {
+
     /**
      * 分页插件
      * @return

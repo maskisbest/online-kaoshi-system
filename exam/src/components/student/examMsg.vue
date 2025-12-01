@@ -18,10 +18,13 @@
         </li>
       </ul>
       <ul class="bottom">
-        <li>更新于{{examData.examDate}}</li>
+        <li>考试日期：{{examData.examDate}}</li>
         <li>来自 {{examData.institute}}</li>
         <li class="btn">{{examData.type}}</li>
-        <li class="right"><el-button @click="toAnswer(examData.examCode)">开始答题</el-button></li>
+        <li class="right status">
+          <el-tag :type="statusInfo.tag" size="small">{{statusInfo.label}}</el-tag>
+          <el-button :disabled="statusInfo.value !== 'ongoing'" @click="toAnswer(examData.examCode)">开始答题</el-button>
+        </li>
       </ul>
       <ul class="info">
         <li @click="dialogVisible = true"><a href="javascript:;"><i class="iconfont icon-info"></i>考生须知</a></li>
@@ -92,8 +95,8 @@ export default {
     return {
       dialogVisible: false, //对话框属性
       activeName: '0',  //默认打开序号
-      topicCount: [],//每种类型题目的总数
-      score: [],  //每种类型分数的总数
+      topicCount: [0,0,0],//每种类型题目的总数
+      score: [0,0,0],  //每种类型分数的总数
       examData: { //考试信息
         // source: null,
         // totalScore: null,
@@ -101,6 +104,7 @@ export default {
       topic: {  //试卷信息
 
       },
+      status: 'pending'
     }
   },
   mounted() {
@@ -113,6 +117,7 @@ export default {
       this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
         res.data.data.examDate = res.data.data.examDate.substr(0,10)
         this.examData = { ...res.data.data}
+        this.status = this.getExamStatus(this.examData.examDate, this.examData.totalTime)
         let paperId = this.examData.paperId
         this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
           this.topic = {...res.data}
@@ -130,8 +135,33 @@ export default {
       })
     },
     toAnswer(id) {
+      if (this.status !== 'ongoing') {
+        this.$message.warning('当前不在考试开放时间，无法开始答题')
+        return
+      }
       this.$router.push({path:"/answer",query:{examCode: id}})
     },
+    getExamStatus(examDate, totalTime) {
+      if (!examDate) return 'pending'
+      const start = new Date(`${examDate.replace(/-/g,'/')} 00:00:00`)
+      const duration = Number(totalTime) || 60
+      const end = new Date(start.getTime() + duration * 60000)
+      const now = new Date()
+      if (now < start) return 'notStarted'
+      if (now > end) return 'ended'
+      return 'ongoing'
+    }
+  },
+  computed: {
+    statusInfo() {
+      const map = {
+        notStarted: { label: '未开始', tag: 'info', value: 'notStarted' },
+        ongoing: { label: '考试中', tag: 'success', value: 'ongoing' },
+        ended: { label: '已结束', tag: 'danger', value: 'ended' },
+        pending: { label: '未获取', tag: 'warning', value: 'pending' }
+      }
+      return map[this.status] || map.pending
+    }
   }
 }
 </script>
@@ -212,6 +242,11 @@ export default {
 }
 .wrapper .bottom li {
   margin-right: 14px;
+}
+.wrapper .bottom .status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 #msg {
   background-color: #eee;
