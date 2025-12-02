@@ -114,14 +114,111 @@ export default {
   padding-top: 20px;
 }
 .table {
-  width: 980px;
+  width: 1100px;
   margin: 0 auto;
+  padding: 24px 0 48px;
   .title {
     margin: 20px;
+    color: #f5f7ff;
+    font-size: 22px;
+    font-weight: 700;
   }
   .content-el {
-    background-color: #fff;
-    padding: 20px;
+    background: rgba(10, 14, 22, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
+}
+
+// 表格主题适配暗色玻璃
+:global(.content-el .el-table) {
+  background: transparent;
+  color: #e8edf8;
+}
+
+:global(.content-el .el-table__header-wrapper),
+:global(.content-el .el-table__body-wrapper),
+:global(.content-el .el-table__fixed-body-wrapper),
+:global(.content-el .el-table__footer-wrapper) {
+  background: transparent !important;
+}
+
+:global(.content-el .el-table th) {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #dfe7ff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+:global(.content-el .el-table td) {
+  background: transparent !important;
+  color: #d8e4ff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+:global(.content-el .el-table tr) {
+  background: transparent !important;
+}
+
+:global(.content-el .el-table--striped .el-table__body tr.el-table__row--striped td) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+:global(.content-el .el-table__body tr:hover > td) {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+:global(.content-el .el-tag) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f0f4ff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+:global(.content-el .el-tag--success) {
+  background: rgba(63, 191, 127, 0.15);
+  color: #9ef2c6;
+  border-color: rgba(63, 191, 127, 0.45);
+}
+
+:global(.content-el .el-tag--danger) {
+  background: rgba(255, 98, 98, 0.15);
+  color: #ffb3b3;
+  border-color: rgba(255, 98, 98, 0.35);
+}
+
+:global(.content-el .el-table__empty-text) {
+  color: #d8e4ff;
+}
+
+// 分页样式
+:global(.content-el .el-pagination) {
+  color: #dfe7ff;
+}
+
+:global(.content-el .el-pager li) {
+  background: transparent;
+  color: #dfe7ff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+:global(.content-el .el-pager li.active) {
+  background: linear-gradient(120deg, #4da1ff, #7c8bff);
+  color: #f8fbff;
+  border: none;
+  box-shadow: 0 10px 20px rgba(67, 137, 255, 0.35);
+}
+
+:global(.content-el .el-pagination button) {
+  background: transparent;
+  color: #dfe7ff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+:global(.content-el .el-pagination button.is-disabled) {
+  color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 </style>

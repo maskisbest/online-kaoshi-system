@@ -186,12 +186,16 @@ export default {
   display: flex;
   justify-content: center;
 }
-#message {
-  width: 980px;
-  margin: 0 auto;
-}
 .title {
   margin: 20px;
+  color: #f3f6ff;
+  font-size: 22px;
+  font-weight: 700;
+}
+#message {
+  width: 1100px;
+  margin: 0 auto;
+  padding: 24px 0 48px;
 }
 .content {
   padding: 20px 0px;
@@ -207,20 +211,26 @@ export default {
       font-size: 13px;
     }
     .list {
-      background-color: #eee;
-      padding:10px;
-      border-radius: 4px;
-      margin: 10px 0px;
+      background: linear-gradient(135deg, rgba(22, 32, 52, 0.9), rgba(16, 24, 40, 0.9));
+      padding:14px 14px 16px;
+      border-radius: 12px;
+      margin: 12px 0px;
       position: relative;
       transition: all .3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+      color: #e3ebff;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       .title {
-        color: #5f5f5f;
+        color: #f3f6ff;
         margin: 0px;
-        font-size: 13px;
+        font-size: 15px;
         line-height: 30px;
       }
       .content {
         padding: 0px;
+        color: #d5def2;
       }
       .icon-untitled33 {
         font-size: 13px;
@@ -229,13 +239,13 @@ export default {
       .icon-date {
         font-size: 13px;
         margin-right: 4px;
-        color: rgb(80, 157, 202);
+        color: rgb(125, 196, 255);
       }
       .replay {
         position: absolute;
         right: 30px;
         bottom: 15px;
-        color: tomato;
+        color: #7dc4ff;
         cursor: pointer;
         transition: all .3s ease;
       }
@@ -243,7 +253,7 @@ export default {
         margin:-7px 0px; 
         padding-bottom: 12px;
         font-size: 13px;
-        color: #28b2b4;
+        color: #9ef2c6;
         i {
           margin-right: 4px;
         }
@@ -252,8 +262,50 @@ export default {
   }
 }
 #message .wrapper {
-  background-color: #fff;
-  padding: 20px;
+  background: rgba(10, 14, 22, 0.82);
+  padding: 24px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
+}
+
+// 输入框、按钮暗色适配
+:global(#message .el-input__inner),
+:global(#message .el-textarea__inner) {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f3f6ff;
+}
+
+:global(#message .el-input__inner::placeholder),
+:global(#message .el-textarea__inner::placeholder) {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+:global(#message .el-button--primary) {
+  background: linear-gradient(120deg, #4da1ff, #7c8bff);
+  border: none;
+  color: #f8fbff;
+  box-shadow: 0 10px 24px rgba(67, 137, 255, 0.35);
+}
+
+:global(#message .el-pagination) {
+  color: #dfe7ff;
+}
+
+:global(#message .el-pager li) {
+  background: transparent;
+  color: #dfe7ff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+:global(#message .el-pager li.active) {
+  background: linear-gradient(120deg, #4da1ff, #7c8bff);
+  color: #f8fbff;
+  border: none;
+  box-shadow: 0 10px 20px rgba(67, 137, 255, 0.35);
 }
 </style>

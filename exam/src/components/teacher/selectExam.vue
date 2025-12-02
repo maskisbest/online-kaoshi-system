@@ -1,6 +1,6 @@
 //查询所有考试
 <template>
-  <div class="exam">
+<div class="exam">
     <div class="wrapper">
       <ul class="top">
         <li class="order">试卷列表</li>
@@ -20,7 +20,8 @@
       </ul>
     </div>
 
-    <el-table :data="pagination.records" border>
+    <div class="table-shell">
+  <el-table :data="pagination.records" border class="glass-table">
       <el-table-column
         fixed="left"
         prop="source"
@@ -88,17 +89,18 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="pagination.current"
-      :page-sizes="[4, 8, 10, 20]"
-      :page-size="pagination.size"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.total"
-      class="page"
-    >
-    </el-pagination>
+  <el-pagination
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
+    :current-page="pagination.current"
+    :page-sizes="[4, 8, 10, 20]"
+    :page-size="pagination.size"
+    layout="total, sizes, prev, pager, next, jumper"
+    :total="pagination.total"
+    class="page"
+  >
+  </el-pagination>
+</div>
     <!-- 编辑对话框-->
     <el-dialog
       title="编辑试卷信息"
@@ -288,25 +290,18 @@ export default {
 </script>
 <style lang="less" scoped>
 .exam {
-  padding: 0px 40px;
-  .page {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .edit {
-    margin-left: 20px;
-  }
-}
-</style>
-<style lang="less" scoped>
-.exam {
-  color: var(--text-main);
+  padding: 24px 40px;
+  color: #e8edf8;
 }
 
 .wrapper {
-  background: transparent;
+  background: rgba(10, 14, 22, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .top {
@@ -315,22 +310,24 @@ export default {
   flex-wrap: wrap;
   list-style: none;
   gap: 12px;
-  margin: 0 0 20px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--panel-strong);
+  margin: 0 0 14px;
+  padding: 0;
+  color: #f5f7ff;
 }
 
-.top .order {
+.top li {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
   font-weight: 600;
-  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 1px;
 }
 
 .top .search-li {
   margin-left: auto;
   flex: 1;
-  min-width: 220px;
+  min-width: 240px;
 }
 
 .top .icon {
@@ -341,19 +338,19 @@ export default {
   width: 100%;
   padding: 10px 36px 10px 14px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-main);
-  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f3f6ff;
+  transition: 0.2s ease;
 }
 
 .top .search::placeholder {
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .top .search:focus,
 .top .search:hover {
-  border-color: rgba(14, 165, 233, 0.7);
+  border-color: rgba(77, 161, 255, 0.8);
   outline: none;
 }
 
@@ -362,27 +359,96 @@ export default {
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-muted);
-}
-
-.top li {
-  display: flex;
-  align-items: center;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .top ::v-deep .el-button--primary {
-  background: var(--brand);
-  border-color: var(--brand);
-  color: #0b1221;
+  background: linear-gradient(120deg, #4da1ff, #7c8bff);
+  border: none;
+  color: #f8fbff;
+  box-shadow: 0 10px 24px rgba(67, 137, 255, 0.35);
 }
 
-.top ::v-deep .el-button--primary:hover {
-  background: var(--brand-strong);
-  border-color: var(--brand-strong);
+.table-shell {
+  background: rgba(5, 9, 16, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+}
+
+.glass-table {
+  margin-top: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  background: transparent;
+}
+
+:global(.glass-table .el-table),
+:global(.glass-table .el-table__header-wrapper),
+:global(.glass-table .el-table__body-wrapper),
+:global(.glass-table .el-table__inner-wrapper),
+:global(.glass-table .el-table__empty-block),
+:global(.glass-table .el-table__fixed) {
+  background: transparent !important;
+  color: #dfe7ff;
+}
+
+:global(.glass-table .el-table__header-wrapper thead tr th),
+:global(.glass-table .el-table th) {
+  background: linear-gradient(120deg, rgba(20, 28, 44, 0.98), rgba(10, 14, 22, 0.98)) !important;
+  color: #f7f9ff !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+:global(.glass-table .el-table td),
+:global(.glass-table .el-table tr) {
+  background: rgba(8, 11, 19, 0.97) !important;
+  color: #e4e9f8;
+}
+
+:global(.glass-table .el-table__body tr:nth-child(odd) > td) {
+  background: rgba(8, 11, 19, 0.97) !important;
+}
+
+:global(.glass-table .el-table__body tr:hover > td) {
+  background: rgba(8, 11, 19, 0.97) !important;
+}
+
+:global(.glass-table .el-table td .cell),
+:global(.glass-table .el-table th .cell) {
+  background: transparent !important;
+}
+
+:global(.glass-table .el-table--border::after),
+:global(.glass-table .el-table--group::after),
+:global(.glass-table .el-table::before),
+:global(.glass-table .el-table--border::before),
+:global(.glass-table .el-table--group::before) {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+:global(.glass-table .el-table td),
+:global(.glass-table .el-table th.is-leaf) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+:global(.glass-table .el-table__empty-text) {
+  color: #d8e4ff;
+}
+
+:global(.glass-table .el-button--primary) {
+  background: linear-gradient(120deg, #4da1ff, #7c8bff);
+  border: none;
+  color: #f8fbff;
 }
 
 .pagination {
-  padding: 28px 0 10px;
+  padding: 18px 0 10px;
+  color: #dfe7ff;
 }
 
 .pagination ::v-deep .el-pagination {
@@ -390,9 +456,72 @@ export default {
   justify-content: center;
 }
 
+.pagination ::v-deep .el-pagination__total,
+.pagination ::v-deep .el-pagination__sizes {
+  color: #dfe7ff;
+}
+
+.pagination ::v-deep .el-pagination button {
+  background: transparent;
+  color: #dfe7ff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pagination ::v-deep .el-pagination button.is-disabled {
+  color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.pagination ::v-deep .el-pager li {
+  background: transparent;
+  color: #dfe7ff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pagination ::v-deep .el-pager li.active {
+  background: linear-gradient(120deg, #4da1ff, #7c8bff);
+  color: #f8fbff;
+  border: none;
+  box-shadow: 0 10px 20px rgba(67, 137, 255, 0.35);
+}
+
+.update ::v-deep .el-form-item__label {
+  color: #dfe7ff;
+}
+
+.update .el-input__inner,
+.update .el-textarea__inner {
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f3f6ff;
+}
+
+.update .el-input__inner::placeholder,
+.update .el-textarea__inner::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+:deep(.el-dialog) {
+  background: rgba(10, 14, 22, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+:deep(.el-dialog__title) {
+  color: #f5f7ff;
+}
+
+:deep(.el-dialog__body) {
+  color: #d8e4ff;
+}
+
+:deep(.el-dialog__headerbtn .el-dialog__close) {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 @media (max-width: 768px) {
   .top {
-    padding: 16px;
+    padding: 0;
   }
 
   .top .search-li {
